@@ -1,36 +1,51 @@
 
 chrome.runtime.onMessage.addListener(function(request, sender) {
-  if (request.action == "getSource") {
-    var stringData = [request.source];
+  if (request.action == 'getSource') {
+    var stringData = request.source;
     var key = '2fedeefb340bc05e8a8fc09564a685db';
     var params = 'data=' + stringData + '&api_key=' + key;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://apiv2.indico.io/emotion', true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    message.innerText = request.source;
-
-    xhr.onload = function (e) {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                //  put into html
-                console.log(document);
-                console.log(xhr.responseText);
-            } else {
-                // TODO: Request Error state 
-                console.error(xhr.statusText);
-            }
+    $.post(
+      'https://apiv2.indico.io/emotion',
+      JSON.stringify({
+        'api_key': '2fedeefb340bc05e8a8fc09564a685db',
+        'data': stringData
+      })
+    ).then(function(res) {
+      var results = JSON.parse(res).results;
+      // draw chart
+      var chartData = [];
+      var chartLabels = [];
+      for (var key in results) {
+        chartLabels.push(key)
+        chartData.push(parseFloat(results[key]*100).toFixed(2))
+      }
+      
+      var chartData = {
+        labels : chartLabels,
+        title : 'Emotion Breakdown',
+        datasets : [
+          {
+            fillColor : 'rgba(220,220,220,0.5)',
+            strokeColor : 'rgba(220,220,220,1)',
+            pointColor : 'rgba(220,220,220,1)',
+            pointStrokeColor : '#fff',
+            data : chartData
+          },
+        ]
+      };
+      var chartOptions = {
+        footNote: 'Emotional Breakdown',
+        annotateDisplay : true,
+        annotateLabel: function(data) {
+          console.log(data);
         }
-    };
-
-    xhr.onerror = function (e) {
-      console.error(xhr.statusText);
-    };
-
-    xhr.send(params);
+      }
+      var chart = new Chart(document.getElementById('myChart').getContext('2d')).Radar(chartData, chartOptions);
+    });
   }
 });
 
-function onWindowLoad() {
+$(function() {
   function tabCallback(tabs) {
     var currentUrl = tabs[0].url; // there will be only one in this array
     var message = document.querySelector('#message');
@@ -39,7 +54,7 @@ function onWindowLoad() {
       return;
     }
     chrome.tabs.executeScript(null, {
-      file: "getPagesSource.js"
+      file: 'getPagesSource.js'
     }, function() {
       // If you try and inject into an extensions page or the webstore/NTP you'll get an error
       if (chrome.runtime.lastError) {
@@ -49,6 +64,4 @@ function onWindowLoad() {
   };
   var query = { active: true, currentWindow: true };
   chrome.tabs.query(query, tabCallback);
-};
-
-window.onload = onWindowLoad;
+});
