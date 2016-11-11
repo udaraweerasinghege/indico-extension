@@ -35,10 +35,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
       };
       var chartOptions = {
         footNote: 'Emotional Breakdown',
-        annotateDisplay : true,
-        annotateLabel: function(data) {
-          console.log(data);
-        }
+        annotateDisplay : true
       }
       var chart = new Chart(document.getElementById('myChart').getContext('2d')).Radar(chartData, chartOptions);
     });
@@ -50,7 +47,8 @@ $(function() {
     var currentUrl = tabs[0].url; // there will be only one in this array
     var message = document.querySelector('#message');
     // only works with medium
-    if (!currentUrl.startsWith('https://medium.com/')) {
+    if (!currentUrl.startsWith('https://medium.com/') && !/https?:\/\/medium[.]([a-z0-9]+[.])com\/[\s\S]*/.test(currentUrl)) {
+      $('#error').html('Error')
       return;
     }
     chrome.tabs.executeScript(null, {
