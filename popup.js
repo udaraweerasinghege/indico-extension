@@ -1,5 +1,5 @@
-
 chrome.runtime.onMessage.addListener(function(request, sender) {
+  $('#loading').show();
   if (request.action == 'getSource') {
     var stringData = request.source;
     var key = '2fedeefb340bc05e8a8fc09564a685db';
@@ -11,6 +11,9 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         'data': stringData
       })
     ).then(function(res) {
+      $('#loading').fadeOut(function() {
+        $('#myChart').fadeIn();
+      });
       var results = JSON.parse(res).results;
       // draw chart
       var chartData = [];
@@ -22,7 +25,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
       
       var chartData = {
         labels : chartLabels,
-        title : 'Emotion Breakdown',
+        title : 'Sentiment Analysis',
         datasets : [
           {
             fillColor : 'rgba(220,220,220,0.5)',
@@ -34,7 +37,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
         ]
       };
       var chartOptions = {
-        footNote: 'Emotional Breakdown',
+        footNote: 'Sentiment Analysis',
         annotateDisplay : true
       }
       var chart = new Chart(document.getElementById('myChart').getContext('2d')).Radar(chartData, chartOptions);
@@ -43,12 +46,13 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
 });
 
 $(function() {
+  $('#myChart').hide();
   function tabCallback(tabs) {
     var currentUrl = tabs[0].url; // there will be only one in this array
     var message = document.querySelector('#message');
     // only works with medium
     if (!currentUrl.startsWith('https://medium.com/') && !/https?:\/\/medium[.]([a-z0-9]+[.])com\/[\s\S]*/.test(currentUrl)) {
-      $('#error').html('Error')
+      $("#loading-word").text('You\'re not on a medium website.')
       return;
     }
     chrome.tabs.executeScript(null, {

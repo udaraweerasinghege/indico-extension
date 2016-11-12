@@ -1,0 +1,283 @@
+.wrapper {
+  width: 366px;
+  transform: scale(0.18);
+}
+span {
+  margin: 0;
+  height: 228px;
+  width: 248px;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  background-color: white;
+  margin: 0 auto;
+}
+
+#loading-word {
+  position: absolute;
+  top: 300px;
+  width: 500%;
+  text-align: center;
+  font-size: 65px;
+  color: black;
+  font-weight: lighter;
+  font-style: italic;
+  letter-spacing: 20px;
+}
+
+.cell {
+  width: 100%;
+  height: 100%;
+  /* display: flex; */
+  justify-content: center;
+  /* flex-wrap: wrap; */
+  margin: 0 5%;
+  /* margin-right: 75px; */
+}
+
+.happy {
+  background-color: white;
+}
+.happy .face {
+  animation: happy 8s infinite;
+}
+.happy .mouth {
+  width: 100px;
+  height: 50px;
+  border-style: solid;
+  border-radius: 50%;
+  border-width: 8px;
+  border-color: transparent transparent #999 transparent;
+  left: 43px;
+  top: 40px;
+  position: absolute;
+}
+.happy .l-eye,
+.happy .r-eye {
+  top: 55px;
+}
+
+.standard {
+  background-color: white;
+}
+.standard .face {
+  animation: standard 5s infinite;
+}
+.standard .l-eye,
+.standard .r-eye {
+  top: 105px;
+  animation-delay: 1.2s;
+}
+.standard .mouth {
+  width: 75px;
+  height: 8px;
+  border-radius: 8px;
+  background-color: #999;
+  left: 63px;
+  top: 140px;
+  position: absolute;
+}
+
+.sad {
+  background-color: white;
+}
+.sad .face {
+  animation: sad 6s infinite;
+}
+.sad .l-eye,
+.sad .r-eye {
+  top: 105px;
+  animation-delay: 3.4s;
+}
+.sad .mouth {
+  width: 100px;
+  height: 50px;
+  border-style: solid;
+  border-radius: 50%;
+  border-width: 8px;
+  border-color: #999 transparent transparent transparent;
+  left: 43px;
+  top: 130px;
+  position: absolute;
+}
+
+.angry {
+  background-color: white;
+}
+.angry .l-brow {
+  width: 35px;
+  height: 8px;
+  border-radius: 8px;
+  background-color: #999;
+  left: 38px;
+  top: 100px;
+  position: absolute;
+  transform: rotate(25deg);
+}
+.angry .r-brow {
+  width: 35px;
+  height: 8px;
+  border-radius: 8px;
+  background-color: #999;
+  right: 38px;
+  top: 100px;
+  position: absolute;
+  transform: rotate(-25deg);
+}
+.angry .l-eye,
+.angry .r-eye {
+  top: 105px;
+  animation-delay: 4.7s;
+}
+.angry .mouth {
+  width: 100px;
+  height: 50px;
+  border-style: solid;
+  border-radius: 50%;
+  border-width: 8px;
+  border-color: #999 transparent transparent transparent;
+  left: 43px;
+  top: 130px;
+  position: absolute;
+}
+
+.head {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 4px solid #999;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.l-eye,
+.r-eye {
+  width: 25px;
+  height: 25px;
+  background-color: #999;
+  border-radius: 50%;
+  position: absolute;
+  animation: blink 5s infinite;
+}
+
+.l-eye {
+  left: 45px;
+}
+
+.r-eye {
+  right: 45px;
+}
+
+@keyframes blink {
+  0% {
+    transform: scale(1, 1);
+  }
+  10% {
+    transform: scale(1, 1);
+  }
+  12% {
+    transform: scale(1, 0.1);
+  }
+  14% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: scale(1, 1);
+  }
+  32% {
+    transform: scale(1, 0.1);
+  }
+  34% {
+    transform: scale(1, 1);
+  }
+  60% {
+    transform: scale(1, 1);
+  }
+  62% {
+    transform: scale(1, 0.1);
+  }
+  64% {
+    transform: scale(1, 1);
+  }
+}
+@keyframes happy {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  10% {
+    transform: translate(10px, 10px);
+  }
+  20% {
+    transform: translate(10px, 5px);
+  }
+  30% {
+    transform: translate(0px, 0px);
+  }
+  60% {
+    transform: translate(-20px, -10px);
+  }
+  70% {
+    transform: translate(-10px, -15px);
+  }
+  80% {
+    transform: translate(-10px, -15px);
+  }
+  90% {
+    transform: translate(0px, 0px);
+  }
+}
+@keyframes standard {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  10% {
+    transform: translate(-25px, 0px);
+  }
+  20% {
+    transform: translate(-25px, 0px);
+  }
+  30% {
+    transform: translate(0px, 0px);
+  }
+  60% {
+    transform: translate(0px, 0px);
+  }
+  70% {
+    transform: translate(15px, -15px);
+  }
+  80% {
+    transform: translate(15px, -15px);
+  }
+  90% {
+    transform: translate(0px, 0px);
+  }
+}
+@keyframes sad {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  15% {
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(0px, -25px);
+  }
+  35% {
+    transform: translate(0px, -25px);
+  }
+  45% {
+    transform: translate(0px, 0px);
+  }
+  70% {
+    transform: translate(0px, 0px);
+  }
+  80% {
+    transform: translate(-15px, -25px);
+  }
+  90% {
+    transform: translate(-15px, -25px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
